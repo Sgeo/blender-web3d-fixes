@@ -1546,7 +1546,8 @@ def translateTexTransform(node, ancestry):
         cent_mat = cent_imat = None
 
     if rot:
-        rot_mat = Matrix.Rotation(rot, 4, 'Z')  # translateRotation(rot)
+        # Hack for T101959
+        rot_mat = Matrix.Rotation(-rot, 4, 'Z')  # translateRotation(rot)
     else:
         rot_mat = None
 
