@@ -3063,6 +3063,8 @@ def importShape_ProcessObject(
         bpyob_reverse.data.flip_normals()
         bpy.context.collection.objects.link(bpyob_reverse)
         bpyob_reverse.select_set(True)
+        with bpy.context.temp_override(active_object=bpyob, selected_editable_objects=[bpyob, bpyob_reverse]):
+            bpy.ops.object.join()
 
 
     if DEBUG:
