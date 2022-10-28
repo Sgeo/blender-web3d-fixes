@@ -2678,6 +2678,7 @@ def importMesh_Box(geom, ancestry):
         1, 0, 0, 0, 0, 1, 1, 1))
 
     bpymesh.update()
+    bpymesh.flip_normals() # Temporary (I hope) hack
     return bpymesh
 
 # -----------------------------------------------------------------------------------
