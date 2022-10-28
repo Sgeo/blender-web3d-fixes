@@ -1469,6 +1469,7 @@ for i, f in enumerate(files):
 # NO BLENDER CODE ABOVE THIS LINE.
 # -----------------------------------------------------------------------------------
 import bpy
+import bmesh
 from bpy_extras import image_utils, node_shader_utils
 from mathutils import Vector, Matrix, Quaternion
 
@@ -3055,6 +3056,18 @@ def importShape_ProcessObject(
     bpyob.matrix_world = getFinalMatrix(node, None, ancestry, global_matrix)
     bpycollection.objects.link(bpyob)
     bpyob.select_set(True)
+    if not geom.getFieldAsBool('solid', True, ancestry):
+        # Some code from https://blender.stackexchange.com/a/214604
+        bpyob_reverse = bpyob.copy()
+        bm = bmesh.new()
+        bm.from_mesh(bpyob.data)
+        bmesh.ops.reverse_faces(bm, faces=bm.faces, flip_multires=False)
+        bm.to_mesh(bpyob_reverse.data)
+        bm.clear()
+        bm.free()
+        bpy.context.collection.objects.link(bpyob_reverse)
+        bpyob_reverse.select_set(True)
+
 
     if DEBUG:
         bpyob["source_line_no"] = geom.lineno
