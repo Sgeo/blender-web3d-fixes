@@ -1706,7 +1706,6 @@ def flip(r, ccw):
 
 
 def importMesh_IndexedTriangleSet(geom, ancestry):
-    # Ignoring solid
     # colorPerVertex is always true
     ccw = geom.getFieldAsBool('ccw', True, ancestry)
 
@@ -1729,7 +1728,6 @@ def importMesh_IndexedTriangleSet(geom, ancestry):
 
 
 def importMesh_IndexedTriangleStripSet(geom, ancestry):
-    # Ignoring solid
     # colorPerVertex is always true
     cw = 0 if geom.getFieldAsBool('ccw', True, ancestry) else 1
     bpymesh = bpy.data.meshes.new(name="IndexedTriangleStripSet")
@@ -1765,7 +1763,6 @@ def importMesh_IndexedTriangleStripSet(geom, ancestry):
 
 
 def importMesh_IndexedTriangleFanSet(geom, ancestry):
-    # Ignoring solid
     # colorPerVertex is always true
     cw = 0 if geom.getFieldAsBool('ccw', True, ancestry) else 1
     bpymesh = bpy.data.meshes.new(name="IndexedTriangleFanSet")
@@ -1800,7 +1797,6 @@ def importMesh_IndexedTriangleFanSet(geom, ancestry):
 
 
 def importMesh_TriangleSet(geom, ancestry):
-    # Ignoring solid
     # colorPerVertex is always true
     ccw = geom.getFieldAsBool('ccw', True, ancestry)
     bpymesh = bpy.data.meshes.new(name="TriangleSet")
@@ -1822,7 +1818,6 @@ def importMesh_TriangleSet(geom, ancestry):
 
 
 def importMesh_TriangleStripSet(geom, ancestry):
-    # Ignoring solid
     # colorPerVertex is always true
     cw = 0 if geom.getFieldAsBool('ccw', True, ancestry) else 1
     bpymesh = bpy.data.meshes.new(name="TriangleStripSet")
@@ -1848,7 +1843,6 @@ def importMesh_TriangleStripSet(geom, ancestry):
 
 
 def importMesh_TriangleFanSet(geom, ancestry):
-    # Ignoring solid
     # colorPerVertex is always true
     cw = 0 if geom.getFieldAsBool('ccw', True, ancestry) else 1
     bpymesh = bpy.data.meshes.new(name="TriangleStripSet")
@@ -2444,7 +2438,6 @@ GLOBALS['CIRCLE_DETAIL'] = 12
 
 
 def importMesh_Sphere(geom, ancestry):
-    # solid is ignored.
     # Extra field 'subdivision="n m"' attribute, specifying how many
     # rings and segments to use (X3DOM).
     r = geom.getFieldAsFloat('radius', 0.5, ancestry)
@@ -2540,7 +2533,6 @@ def importMesh_Sphere(geom, ancestry):
 
 
 def importMesh_Cylinder(geom, ancestry):
-    # solid is ignored
     # no ccw in this element
     # Extra parameter subdivision="n" - how many faces to use
     radius = geom.getFieldAsFloat('radius', 1.0, ancestry)
@@ -2598,7 +2590,6 @@ def importMesh_Cylinder(geom, ancestry):
 
 
 def importMesh_Cone(geom, ancestry):
-    # Solid ignored
     # Extra parameter subdivision="n" - how many faces to use
     n = geom.getFieldAsInt('subdivision', GLOBALS['CIRCLE_DETAIL'], ancestry)
     radius = geom.getFieldAsFloat('bottomRadius', 1.0, ancestry)
@@ -2639,7 +2630,6 @@ def importMesh_Cone(geom, ancestry):
 
 
 def importMesh_Box(geom, ancestry):
-    # Solid is ignored
     # No ccw in this element
     (dx, dy, dz) = geom.getFieldAsFloatTuple('size', (2.0, 2.0, 2.0), ancestry)
     dx /= 2
@@ -3018,8 +3008,6 @@ def importShape_ProcessObject(
     bpydata.name = vrmlname
 
     if type(bpydata) == bpy.types.Mesh:
-        # solid, as understood by the spec, is always true in Blender
-        # solid=false, we don't support it yet.
         creaseAngle = geom.getFieldAsFloat('creaseAngle', None, ancestry)
         if creaseAngle is not None:
             bpydata.auto_smooth_angle = creaseAngle
