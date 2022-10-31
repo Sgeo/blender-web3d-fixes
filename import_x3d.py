@@ -2731,7 +2731,7 @@ def appearance_CreateDefaultMaterial():
     bpymat_wrap = node_shader_utils.PrincipledBSDFWrapper(bpymat, is_readonly=False)
 
     bpymat_wrap.roughness = 0.8
-    bpymat_wrap.base_color = (0.8, 0.8, 0.8, 1.0)
+    bpymat_wrap.base_color = (0.8, 0.8, 0.8)
     #bpymat.mirror_color = (0, 0, 0)
     #bpymat.emit = 0
 
@@ -2773,7 +2773,7 @@ def appearance_LoadImageTexture(imageTexture, ancestry, node):
             # '"foo" "bar"' --> ['foo', 'bar']
             ima_urls = [w.strip('"') for w in ima_urls.split('" "')]
         else:
-            ima_urls = [ima_urls]
+            ima_urls = [ima_urls.strip('"')]
     # ima_urls is a list or None
 
     if ima_urls is None:
